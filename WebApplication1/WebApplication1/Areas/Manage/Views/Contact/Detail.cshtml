@@ -1,0 +1,22 @@
+﻿@model Contact
+
+<div class="page-wrapper">
+    <ul>
+        <li style="padding: 5px 25px; border: 1px solid grey; border-radius: 10px;">
+            <div class="comment-body">
+                <span>Who post comment :</span><br /><h5 class="comment-author"> @Model.Name</h5> <br />
+                <span>Writed email :</span><br /><h5 class="comment-author"> @Model.Email</h5> <br />
+                <span>User email :</span><br /><h5 class="comment-author"> @Model.MainEmail</h5> <br />
+                <span>Phone :</span><br /><h5 class="comment-author"> @Model.Phone</h5> <br />
+                <span>Subject :</span><br /><h5 class="comment-author"> @Model.Subject</h5> <br />
+                <div class="comment-post-date">
+                    <span>Posted at :</span> <br /><h5 class="comment-author">@Model.CreatedAt</h5> <br />
+                </div>
+                <p>
+                    <span>Description :</span><br /> <h5 class="comment-author">@Model.Message</h5>
+                </p>
+            </div>
+        </li>
+    </ul>
+    <a asp-action="index" asp-controller="contact" asp-area="manage" class="btn">Go to Messages list</a>
+</div>

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Review>
+@{
+
+    int count = (ViewBag.PageIndex - 1) * 5;
+}
+
+<div class="page-wrapper">
+    <form>
+        <div class="form-group col-lg-6 m-auto">
+            <label>Status</label>
+            <select class="form-control" name="status">
+                @if (ViewBag.Status == null)
+                {
+                    <option selected>All</option>
+                    <option value="false">Active</option>
+                    <option value="true">DeActive</option>
+                }
+                else if (ViewBag.Status == true)
+                {
+                    <option>All</option>
+                    <option value="false">Active</option>
+                    <option value="true" selected>DeActive</option>
+                }
+                else
+                {
+                    <option>All</option>
+                    <option value="false" selected>Active</option>
+                    <option value="true">DeActive</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <ul>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (Review review in Model)
+            {
+                count++;
+                <li style="padding: 5px 25px; border: 1px solid grey; border-radius: 10px;">
+                    <div class="comment-body">
+                        @count.
+                        <span style="color:@(review.IsDeleted ? "red":"green")">@(review.IsDeleted ? "Deactive":"Active")</span><br/>
+                        <span>Who post comment :</span><br /><h5 class="comment-author"> @review.Name</h5> <br />
+                        <div class="comment-post-date">
+                            <span>Posted at :</span> <br /><h5 class="comment-author">@review.CreatedAt</h5> <br />
+                            <span>Last updated at :</span> <br /><h5 class="comment-author">@review.UpdatedAt</h5> <br />
+                        </div>
+
+                        <p>
+                            <span>For Blog :</span><br /> <h5 class="comment-author">@review.Blog.Title</h5><br />
+                        </p>
+                        <p>
+                            @if (review.Message.Length > 20)
+                            {
+                                <span>Description :</span><br /> <h5 class="comment-author">@review.Message.ToString().Substring(0, 20)</h5>
+                            }
+                            else
+                            {
+
+                                <span>Description :</span><br /> <h5 class="comment-author">@review.Message</h5>
+                            }
+                        </p>
+                    </div>
+                    <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                        <span class="reply-btn"><a asp-action="edit" asp-controller="review" asp-area="manage" asp-route-id="@review.Id" class="btn">Change</a></span>
+                    </div>
+                    <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                        @if (!review.IsDeleted)
+                        {
+                            <span class="reply-btn"><a asp-action="delete" asp-controller="review" asp-area="manage" asp-route-id="@review.Id" class="btn">Delete</a></span>
+                        }
+                        else
+                        {
+
+                            <span class="reply-btn"><a asp-action="restore" asp-controller="review" asp-area="manage" asp-route-id="@review.Id" class="btn">Restore</a></span>
+                        }
+                    </div>
+                    <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                        <span class="reply-btn"><a asp-action="detail" asp-controller="review" asp-area="manage" asp-route-id="@review.Id" class="btn">Detail</a></span>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="col-lg-12 d-flex justify-content-center">
+    <nav>
+        <ul class="pagination">
+
+            @if (ViewBag.PageIndex > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="1" aria-label="Previous">
+                        @("<<")
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)" aria-label="Previous">
+                        @("<")
+                    </a>
+                </li>
+                @if (ViewBag.PageIndex == ViewBag.PageCount && ViewBag.PageIndex > 2)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-2)">@(ViewBag.PageIndex-2)</a></li>
+                }
+                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)">@(ViewBag.PageIndex-1)</a></li>
+            }
+
+            <li class="page-item active"><a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageIndex">@ViewBag.PageIndex</a></li>
+
+            @if (ViewBag.PageIndex < ViewBag.PageCount)
+            {
+                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex + 1)">@(ViewBag.PageIndex + 1)</a></li>
+
+                @if (ViewBag.PageIndex == 1 && (ViewBag.PageIndex + 2) < ViewBag.PageCount)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex+2)">@(ViewBag.PageIndex+2)</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" asp-route-page="@(ViewBag.PageIndex + 1)" aria-label="Next">
+                        @(">")
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageCount" aria-label="Next">
+                        @(">>")
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

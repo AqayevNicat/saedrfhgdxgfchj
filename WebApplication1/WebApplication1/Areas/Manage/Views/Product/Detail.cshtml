@@ -1,0 +1,68 @@
+﻿@model Product
+@{ 
+    string color = string.Join(",", Model.ProductColorSizes.Select(pc => pc.Color.Name));
+    string tag = string.Join(",", Model.ProductTags.Select(pt => pt.Tag.Name));
+    string size = string.Join(",",Model.ProductColorSizes.Select(ps=>ps.Size.Name));
+}
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Product Detail</h1>
+            </div>
+        </div>
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-8">
+                <div class="card" style="width: 35rem;margin: 0 auto;">
+                    <div class="text-center">
+                        <img class="card-img-top" style="width: 25rem;" src="~/assets/img/product/@Model.Image" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Name</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Count : @Model.Count</li>
+                        <li class="list-group-item">Price : @Model.Price</li>
+                        <li class="list-group-item">Discount Price : @Model.DiscountPrice</li>
+                        <li class="list-group-item">Colors : @color</li>
+                        <li class="list-group-item">Sizes : @size</li>
+                        <li class="list-group-item">Tags : @tag</li>
+                        <li class="list-group-item">
+                            Availability :
+                            @if (Model.Availability)
+                            {
+                                <span class="text-success">In stock </span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">Out of stock </span>
+                            }
+                        </li>
+                        <li class="list-group-item">Category : @Model.Category.Name</li>
+                        <li class="list-group-item">Created at : @Model.CreatedAt</li>
+                        <li class="list-group-item">Last deleted at : @Model.DeletedAt</li>
+                        <li class="list-group-item">Last updated at : @Model.UpdatedAt</li>
+                        <li class="list-group-item">
+                            About product </br>
+                            <p class="card-text">@Model.Description</p>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a asp-action="Update" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-warning">Update</a>
+                        @if (Model.IsDeleted)
+                        {
+                            <a asp-action="Restore" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-primary">Restore</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Delete" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center col-lg-4">
+            <a asp-action="index" asp-controller="product" asp-area="manage" class="btn btn-primary">Go to Products list</a>
+        </div>
+    </div>
+</div>

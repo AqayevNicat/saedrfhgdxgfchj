@@ -1,0 +1,97 @@
+﻿@model Product
+
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Create Product</h1>
+            </div>
+        </div>
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" placeholder="Enter Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageFile"></label>
+                        <input class="form-control" accept="image/jpg" asp-for="ImageFile" placeholder="Choose ImageFile">
+                        <span class="text-danger" asp-validation-for="ImageFile"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ProductImageFiles" class="form-label"></label>
+                        <input asp-for="ProductImageFiles" class="form-control">
+                        <span class="text-danger" asp-validation-for="ProductImageFiles"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input class="form-control" asp-for="Price" placeholder="Enter Price">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DiscountPrice"></label>
+                        <input class="form-control" asp-for="DiscountPrice" placeholder="Enter DiscountPrice">
+                        <span class="text-danger" asp-validation-for="DiscountPrice"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ExTax"></label>
+                        <input class="form-control" asp-for="ExTax" placeholder="Enter ExTax">
+                        <span class="text-danger" asp-validation-for="ExTax"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId">Categories</label>
+                        <select class="form-control" asp-for="CategoryId" asp-items="@new SelectList(ViewBag.Categories, nameof(Category.Id), nameof(Category.Name))">
+                            <option value="" selected>Choose...</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TagIds">Tags</label>
+                        @for (var i = 0; i < ViewBag.Tags.Count; i++)
+                        {
+                            <input type="checkbox" name="TagIds" id="TagIds" value="@(ViewBag.Tags[i].Id)" />@(ViewBag.Tags[i].Name)
+                        }
+                        <span class="text-danger" asp-validation-for="TagIds"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <textarea class="form-control" asp-for="Description" placeholder="Enter Description"></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="inputContaine">
+                        <div class="inputContaineForadd">
+                            @await Html.PartialAsync("_ProductColorSizePartial")
+                        </div>
+                        <div class="addinputbutton">
+                            <a asp-action="GetFormColoRSizeCount" class="btn btn-primary addbtn">Add</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" asp-action="Index">Go To List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("click", ".addbtn", function (e) {
+                e.preventDefault();
+                fetch($(this).attr("href")).then(response => response.text()).then(data => $(".inputContaineForadd").append(data));
+            })
+        })
+    </script>
+}
+}

@@ -1,0 +1,58 @@
+﻿@model Setting
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Update Product</h1>
+            </div>
+        </div>
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="WelcomeMsg"></label>
+                        <input class="form-control" asp-for="WelcomeMsg" placeholder="E">
+                        <span class="text-danger" asp-validation-for="WelcomeMsg"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LogoImageFile"></label>
+                        <input class="form-control" asp-for="LogoImageFile" placeholder="E">
+                        <span class="text-danger" asp-validation-for="LogoImageFile"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <input class="form-control" asp-for="Address" placeholder="E">
+                        <span class="text-danger" asp-validation-for="Address"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input class="form-control" asp-for="Email" placeholder="E">
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone"></label>
+                        <input class="form-control" asp-for="Phone" placeholder="E">
+                        <span class="text-danger" asp-validation-for="Phone"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkDay"></label>
+                        <input class="form-control" asp-for="WorkDay" placeholder="E">
+                        <span class="text-danger" asp-validation-for="WorkDay"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" asp-action="Index">Go To List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

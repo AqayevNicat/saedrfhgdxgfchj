@@ -1,0 +1,114 @@
+﻿
+@model IEnumerable<Blog>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10">
+                <h1>Blog</h1>
+            </div>
+            <div class="col-lg-2">
+                <a class="btn btn-primary" asp-action="Create" asp-controller="Blog">Create</a>
+            </div>
+
+            <form>
+                <div class="form-group col-lg-6 m-auto">
+                    <label>Status</label>
+                    <select class="form-control" name="status">
+                        @if (ViewBag.Status == null)
+                        {
+                            <option selected>All</option>
+                            <option value="false">Active</option>
+                            <option value="true">DeActive</option>
+                        }
+                        else if (ViewBag.Status == true)
+                        {
+                            <option>All</option>
+                            <option value="false">Active</option>
+                            <option value="true" selected>DeActive</option>
+                        }
+                        else
+                        {
+                            <option>All</option>
+                            <option value="false" selected>Active</option>
+                            <option value="true">DeActive</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+            <div class="tableTag">
+                @await Html.PartialAsync("_BlogIndexPartial", Model)
+            </div>
+            <div class="col-lg-12 d-flex justify-content-center">
+                <nav>
+                    <ul class="pagination">
+
+                        @if (ViewBag.PageIndex > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="index" asp-route-page="1" aria-label="Previous">
+                                    @("<<")
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)" aria-label="Previous">
+                                    @("<")
+                                </a>
+                            </li>
+                            @if (ViewBag.PageIndex == ViewBag.PageCount && ViewBag.PageIndex > 2)
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-2)">@(ViewBag.PageIndex-2)</a></li>
+                            }
+                            <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)">@(ViewBag.PageIndex-1)</a></li>
+                        }
+
+                        <li class="page-item active"><a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageIndex">@ViewBag.PageIndex</a></li>
+
+                        @if (ViewBag.PageIndex < ViewBag.PageCount)
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex + 1)">@(ViewBag.PageIndex + 1)</a></li>
+
+                            @if (ViewBag.PageIndex == 1 && (ViewBag.PageIndex + 2) < ViewBag.PageCount)
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex+2)">@(ViewBag.PageIndex+2)</a></li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link" asp-route-page="@(ViewBag.PageIndex + 1)" aria-label="Next">
+                                    @(">")
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageCount" aria-label="Next">
+                                    @(">>")
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+        @section Script{
+            <script src="~/manage/assets/js/sweetalert.min.js"></script>
+            <script src=~/manage/assets/js/Script.js asp-append-version="true"></script>
+
+        }
+
+        @section Style{
+            <link href="~/manage/assets/css/sweetalert.min.css" rel="stylesheet" />
+        }
+
+
+
+
+
+

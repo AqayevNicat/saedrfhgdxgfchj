@@ -1,0 +1,28 @@
+﻿@model Review
+
+    <div class="page-wrapper">
+        <form method="post" asp-action="Edit" asp-controller="review" asp-area="manage" asp-route-id="@Model.Id">
+            <div class="comment-post-box">
+                <div class="row" style="flex-direction: column; justify-content: center; align-items: center; text-align: center;padding:20px;">
+
+                    <label for="Message" style="margin: 0 10px;">Edit Comment  : </label><br />
+                    <div class="col-6 d-flex">
+                        <textarea id="Message" name="Message" placeholder="Write a comment" style="height: 100px; width: 85%;">@Model.Message</textarea>
+                    </div>
+                    @*@for (int i = 0; i < 5; i++)
+        {
+        <i class="ion-android-star" id="Star" name="Star" value="1"></i>
+        <i class="ion-android-star" id="Star" name="Star" value="2"></i>
+        <i class="ion-android-star" id="Star" name="Star" value="3"></i>
+        <i class="ion-android-star" id="Star" name="Star" value="4"></i>
+        <i class="ion-android-star" id="Star" name="Star" value="5"></i>
+        }*@
+                    <div class="col-6">
+                        <div class="coment-btn">
+                            <button class="btn" name="submit">Edit Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>

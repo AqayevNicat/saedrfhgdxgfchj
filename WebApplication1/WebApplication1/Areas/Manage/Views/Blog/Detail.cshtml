@@ -1,0 +1,49 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Detail page</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Publisher Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Create Time</th>
+                                <th scope="col">Update time</th>
+                                <th scope="col">Delete Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <th scope="row">1</th>
+                                <td> <img style="width:50%" src="~/assets/img/blog/@Model.Image" alt="Alternate Text" /></td>
+                                <td>@Html.Raw(Model.Title)</td>
+                                <td>@Model.PublisherName</td>
+                                <td>@Html.Raw(Model.Description)</td>
+                                <td>@Model.CreatedAt</td>
+                                <td>@Model.UpdatedAt</td>
+                                <td>@Model.DeletedAt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a asp-action="Index" asp-controller="Blog" class="btn btn-primary">Go to back</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+

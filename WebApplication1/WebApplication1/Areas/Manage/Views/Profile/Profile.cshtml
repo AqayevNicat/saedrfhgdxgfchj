@@ -1,0 +1,10 @@
+﻿@model MemberProfileVM
+<div class="tab-pane page-wrapper" id="account-info" role="tabpanel">
+    <div class="myaccount-content">
+        <h3>Account Details</h3>
+        <div class="account-details-form">
+
+            @await Html.PartialAsync("_ProfileFormPartial", Model.Member)
+        </div>
+    </div>
+</div>

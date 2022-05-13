@@ -1,0 +1,68 @@
+﻿@model AppUser
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Blank Page</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blank Page</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-6 col-4 align-self-center">
+                <div class="text-end upgrade-btn">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.FullName</td>
+                                    <td>@Model.UserName</td>
+                                    <td>@Model.Email</td>
+                                    <td>@Model.PhoneNumber</td>
+                                    <td>@Model.Address</td>
+                                    <td>@Model.Country</td>
+                                    <td>@Model.City</td>
+                                    <td>@Model.State</td>
+                                    <td>
+                                        <a asp-action="Profile" asp-controller="Profile" asp-area="manage" class="col-lg-12 btn btn-primary">Change your password</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2021 Monster Admin by <a href="https://www.wrappixel.com/">wrappixel.com</a>
+    </footer>
+    <!-- ============================================================== -->
+</div>

@@ -1,0 +1,41 @@
+﻿@model Setting
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Product Detail</h1>
+            </div>
+        </div>
+
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-8">
+                <div class="card" style="width: 35rem;margin: 0 auto;">
+                    <div class="text-center">
+                        <img class="card-img-top" style="width: 25rem;" src="~/assets/img/logo/@Model.Logo" alt="Card image cap">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Welcome Message : @Model.WelcomeMsg</li>
+                        <li class="list-group-item">Address : @Model.Address</li>
+                        <li class="list-group-item">Phone : @Model.Phone</li>
+                        <li class="list-group-item">Email : @Model.Email</li>
+                        <li class="list-group-item">WorkDay : @Model.WorkDay</li>
+                    </ul>
+                    <div class="card-body">
+                        <a asp-action="Update" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-warning">Update</a>
+                        @if (Model.IsDeleted)
+                        {
+                            <a asp-action="Restore" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-primary">Restore</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Delete" asp-controller="product" asp-area="manage" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center col-lg-4">
+            <a asp-action="index" asp-controller="setting" asp-area="manage" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+</div>

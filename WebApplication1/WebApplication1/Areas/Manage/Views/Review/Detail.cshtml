@@ -1,0 +1,37 @@
+﻿@model Review
+
+<div class="page-wrapper">
+    <ul>
+        <li style="padding: 5px 25px; border: 1px solid grey; border-radius: 10px;">
+            <div class="comment-body">
+                <span>Who post comment :</span><br /><h5 class="comment-author"> @Model.Name</h5> <br />
+                <div class="comment-post-date">
+                    <span>Posted at :</span> <br /><h5 class="comment-author">@Model.CreatedAt</h5> <br />
+                    <span>Last updated at :</span> <br /><h5 class="comment-author">@Model.UpdatedAt</h5> <br />
+                </div>
+                <p>
+                    <span>For Blog :</span><br /> <h5 class="comment-author">@Model.Blog.Title</h5><br />
+                </p>
+                <p>
+                    <span>Description :</span><br /> <h5 class="comment-author">@Model.Message</h5>
+                </p>
+            </div>
+            <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                <span class="reply-btn"><a asp-action="edit" asp-controller="review" asp-area="manage" asp-route-id="@Model.Id" class="btn">Change</a></span>
+            </div>
+            <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                @if (!Model.IsDeleted)
+                {
+                    <span class="reply-btn"><a asp-action="delete" asp-controller="review" asp-area="manage" asp-route-id="@Model.Id" class="btn">Delete</a></span>
+                }
+                else
+                {
+
+                    <span class="reply-btn"><a asp-action="restore" asp-controller="review" asp-area="manage" asp-route-id="@Model.Id" class="btn">Restore</a></span>
+                }
+            </div>
+        </li>
+    </ul>
+
+    <a asp-action="index" class="btn">Go to Reviews List</a>
+</div>

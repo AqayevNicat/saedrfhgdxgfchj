@@ -1,0 +1,51 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Create page</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label asp-for="BlogImage" class="form-label"></label>
+                        <input asp-for="BlogImage" class="form-control" accept="image/jpeg">
+                        <span class="text-danger" asp-validation-for="BlogImage"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <textarea asp-for="Title" class="form-control"></textarea>
+                        <span class="text-danger" asp-validation-for="Title"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PublisherName" class="form-label"></label>
+                        <input asp-for="PublisherName" class="form-control">
+                        <span class="text-danger" asp-validation-for="PublisherName"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-action="Index" asp-controller="Blog" class="btn btn-primary">Go to back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script
+{
+    <partial name="_ValidationFormScriptPartial">
+
+}
+
+
+
+
+
+
+

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Contact>
+@{
+
+    int count = (ViewBag.PageIndex - 1) * 5;
+}
+
+<div class="page-wrapper">
+    <ul>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (Contact contact in Model)
+            {
+                count++;
+                <li style="padding: 5px 25px; border: 1px solid grey; border-radius: 10px;">
+                    <div class="comment-body">
+                        @count.
+                        <span>Who post comment :</span><br /><h5 class="comment-author"> @contact.Name</h5> <br />
+                        <div class="comment-post-date">
+                            <span>Posted at :</span> <br /><h5 class="comment-author">@contact.CreatedAt</h5> <br />
+                            <span>Last updated at :</span> <br /><h5 class="comment-author">@contact.UpdatedAt</h5> <br />
+                        </div>
+                        <p>
+                            @if (contact.Message.Length > 20)
+                            {
+                                <span>Description :</span><br /> <h5 class="comment-author">@contact.Message.ToString().Substring(0, 20)</h5>
+                            }
+                            else
+                            {
+
+                                <span>Description :</span><br /> <h5 class="comment-author">@contact.Message</h5>
+                            }
+                        </p>
+                    </div>
+                    <div class="comment-body text-end" style="flex-basis: 0;display:inline-block;">
+                        <span class="reply-btn"><a asp-action="detail" asp-controller="contact" asp-area="manage" asp-route-id="@contact.Id" class="btn">Detail</a></span>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="col-lg-12 d-flex justify-content-center">
+    <nav>
+        <ul class="pagination">
+
+            @if (ViewBag.PageIndex > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="1" aria-label="Previous">
+                        @("<<")
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)" aria-label="Previous">
+                        @("<")
+                    </a>
+                </li>
+                @if (ViewBag.PageIndex == ViewBag.PageCount && ViewBag.PageIndex > 2)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-2)">@(ViewBag.PageIndex-2)</a></li>
+                }
+                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)">@(ViewBag.PageIndex-1)</a></li>
+            }
+
+            <li class="page-item active"><a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageIndex">@ViewBag.PageIndex</a></li>
+
+            @if (ViewBag.PageIndex < ViewBag.PageCount)
+            {
+                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex + 1)">@(ViewBag.PageIndex + 1)</a></li>
+
+                @if (ViewBag.PageIndex == 1 && (ViewBag.PageIndex + 2) < ViewBag.PageCount)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex+2)">@(ViewBag.PageIndex+2)</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" asp-route-page="@(ViewBag.PageIndex + 1)" aria-label="Next">
+                        @(">")
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageCount" aria-label="Next">
+                        @(">>")
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

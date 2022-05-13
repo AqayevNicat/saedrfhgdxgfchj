@@ -1,0 +1,81 @@
+﻿@model List<Setting>
+@{
+    int count = 0;
+}
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Blank Page</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blank Page</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Logo</th>
+                                    <th scope="col">Welcome</th>
+                                    <th scope="col">Adddress</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">WorkDay</th>
+                                    <th scope="col">Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Setting setting in Model)
+                                {
+                                    count++;
+                                <tr>
+                                    <td>
+                                        <img src="~/assets/img/logo/@setting.Logo" alt="homepage" class="dark-logo" />
+                                    </td>
+                                    <td>
+                                        @setting.WelcomeMsg
+                                    </td>
+                                    <td>
+                                        @setting.Address
+                                    </td>
+                                    <td>
+                                        @setting.Email
+                                    </td>
+                                    <td>
+                                        @setting.Phone
+                                    </td>
+                                    <td>
+                                        @setting.WorkDay
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-controller="Setting" asp-area="manage" asp-route-id="@setting.Id" class="col-lg-12 btn btn-primary">Detail</a>
+                                        <a asp-action="Update" asp-controller="Setting" asp-area="manage" asp-route-id="@setting.Id" class="col-lg-12 btn btn-warning">Update</a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2021 Monster Admin by <a href="https://www.wrappixel.com/">wrappixel.com</a>
+    </footer>
+    <!-- ============================================================== -->
+</div>

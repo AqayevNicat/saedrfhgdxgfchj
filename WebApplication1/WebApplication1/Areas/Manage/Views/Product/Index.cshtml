@@ -1,0 +1,190 @@
+﻿@model IEnumerable<Product> 
+@{ 
+    int count = (ViewBag.PageIndex - 1) * 5;
+    string tags = "";
+    string sizes = "";
+    string colors = "";
+}
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Blank Page</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blank Page</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-6 col-4 align-self-center">
+                <div class="text-end upgrade-btn">
+                    <a asp-area="manage" asp-controller="product" asp-action="create"
+                       class="btn btn-success d-none d-md-inline-block text-white">
+                        Create new product
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form>
+                    <div class="form-group col-lg-6 m-auto">
+                        <label>Status</label>
+                        <select class="form-control" name="status">
+                            @if (ViewBag.Status == null)
+                            {
+                                <option selected>All</option>
+                                <option value="false">Active</option>
+                                <option value="true">DeActive</option>
+                            }
+                            else if (ViewBag.Status == true)
+                            {
+                                <option>All</option>
+                                <option value="false">Active</option>
+                                <option value="true" selected>DeActive</option>
+                            }
+                            else
+                            {
+                                <option>All</option>
+                                <option value="false" selected>Active</option>
+                                <option value="true">DeActive</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+                <div class="card">
+                    <div class="card-body tableProduct">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Count</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Tags</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col">Color</th>
+                                    <th scope="col">Process</th>
+                                </tr>
+                            </thead>
+                            <tbody class="productsTableBody">
+                                @foreach (Product product in Model)
+                                {
+                                    count++;
+                                    tags = string.Join(", ", product.ProductTags.Select(p => p.Tag != null ? p.Tag.Name : ""));
+                                    sizes = string.Join(", ", product.ProductColorSizes.Select(p => p.Size != null ? p.Size.Name : ""));
+                                    colors = string.Join(", ", product.ProductColorSizes.Select(p => p.Color != null ? p.Color.Name : ""));
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>
+                                            <img style="width: 100px" src="~/assets/img/product/@product.Image" />
+                                        </td>
+                                        <td>
+                                            <span>@product.Name</span>
+                                        </td>
+                                        <td>
+                                            <span>@product.Count</span>
+                                        </td>
+                                        <td>
+                                            <span>@product.Price</span>
+                                        </td>
+                                        <td style="color:@(product.IsDeleted ? "red":"green")">@(product.IsDeleted ? "Deactive":"Active")</td>
+                                        <td>
+                                            <span>@product.Category.Name</span>
+                                        </td>
+                                        <td>
+                                            <span>@tags</span>
+                                        </td>
+                                        <td>
+                                            <span>@sizes</span>
+                                        </td>
+                                        <td>
+                                            <span>@colors</span>
+                                        </td>
+                                        <td>
+                                            <a asp-action="Detail" asp-controller="product" asp-area="manage" asp-route-id="@product.Id" class="col-lg-12 btn btn-primary">Detail</a>
+                                            <a asp-action="Update" asp-controller="product" asp-area="manage" asp-route-id="@product.Id" class="col-lg-12 btn btn-warning">Update</a>
+                                            @if (product.IsDeleted)
+                                            {
+                                                <a asp-action="Restore" asp-controller="product" asp-area="manage" asp-route-id="@product.Id"  asp-route-status="@ViewBag.Status" asp-route-page="@ViewBag.PageIndex" id="productDelete" class="btn btn-primary">Restore</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Delete" asp-controller="product" asp-area="manage" asp-route-id="@product.Id" asp-route-status="@ViewBag.Status" asp-route-page="@ViewBag.PageIndex"  id="productRestore" class="col-lg-12 btn btn-danger">Delete</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <nav>
+                        <ul class="pagination">
+
+                            @if (ViewBag.PageIndex > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="index" asp-route-page="1" aria-label="Previous">
+                                        @("<<")
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)" aria-label="Previous">
+                                        @("<")
+                                    </a>
+                                </li>
+                                @if (ViewBag.PageIndex == ViewBag.PageCount && ViewBag.PageIndex > 2)
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-2)">@(ViewBag.PageIndex-2)</a></li>
+                                }
+                                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex-1)">@(ViewBag.PageIndex-1)</a></li>
+                            }
+
+                            <li class="page-item active"><a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageIndex">@ViewBag.PageIndex</a></li>
+
+                            @if (ViewBag.PageIndex < ViewBag.PageCount)
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex + 1)">@(ViewBag.PageIndex + 1)</a></li>
+
+                                @if (ViewBag.PageIndex == 1 && (ViewBag.PageIndex + 2) < ViewBag.PageCount)
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(ViewBag.PageIndex+2)">@(ViewBag.PageIndex+2)</a></li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" asp-route-page="@(ViewBag.PageIndex + 1)" aria-label="Next">
+                                        @(">")
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="index" asp-route-page="@ViewBag.PageCount" aria-label="Next">
+                                        @(">>")
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2021 Monster Admin by <a href="https://www.wrappixel.com/">wrappixel.com</a>
+    </footer>
+    <!-- ============================================================== -->
+</div>
